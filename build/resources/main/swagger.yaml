@@ -1,0 +1,770 @@
+openapi: "3.0.3"
+info:
+  title: Desktop customers-cancellation-swagger-v1
+  description: Api que realiza a integração entre o front e o sistema de clientes.<br>
+    Nasceu com o objetivo de facilitar a comunicação entre as multiplas<br>
+    fontes de processamento de pagamento, seja salesforce, sac, datacake...<br>
+    facilitar a implementação de novas funcionalidades e a manutenção das<br>
+    existentes. Solicite a credencial no email de contato abaixo.<br>
+  termsOfService: http://api.desktop.local/terms/
+  contact:
+    name: Lucas Carbonera
+    email: lucas.carbonera@desktop.net.br
+  license:
+    name: © 2021 DESKTOP INTERNET SERVICES | CNPJ 08.170.849/0001-15
+    url: http://www.desktop.com.br
+  version: v1.0.0
+#externalDocs:
+#  description: Saiba mais sobre a CUSTOMERS-CANCELLATION API em nosso confluence
+#  url: https://desktop.atlassian.net/wiki/spaces/SDF/pages/60882945/Gera+o+de+token
+#servers:
+#  - url: http://api-sandbox.desktop.com.br
+#    description: HML
+#  - url: https://api-v2.desktop.com.br
+#    description: PRD
+#  - url: https://oauth-sandbox.desktop.com.br
+#    description: geração de token HML
+#tags:
+#  - name: Customers
+#    description: todos os endpoints relacionados a clientes
+#  - name: Cards
+#    description: todos os endpoints relacionados a cartão
+#  - name: Security Token
+#    description: endpoint de geração de token
+#paths:
+#  /customer_cancellation/v1/customer/rollback/payment_method:
+#    post:
+#      tags:
+#        - "Customers"
+#      summary: Realiza o rollback do método de pagamento
+#      description: Realiza o rollback do método de pagamento
+#      operationId: rollbackPaymentMethod
+#      requestBody:
+#        description: Dados para rollback do método de pagamento
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/RollbackPaymentMethodRequest'
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/RollbackPaymentMethodResponse'
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#
+#  /token:
+#    post:
+#      tags:
+#        - "Security Token"
+#      summary: Gera o token de acesso para a API
+#      description: Gera o token de acesso para a API
+#      operationId: generateToken
+#      requestBody:
+#        description: Dados para geração do token
+#        required: true
+#        content:
+#          application/x-www-form-urlencoded:
+#            schema:
+#              $ref: '#/components/schemas/SecurityTokenRequest'
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/SecurityTokenResponse'
+#  /customer_cancellation/v1/card/token:
+#    post:
+#      tags:
+#        - Cards
+#      summary: Salva o token do cartão
+#      description: Salva o token do cartão
+#      operationId: saveCardToken
+#      security:
+#        - bearerAuth: []
+#      parameters:
+#        - in: header
+#          name: Authorization
+#          description: Baerer Token
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#          example: Baerer <security_token>
+#      requestBody:
+#        description: Dados do cartão
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/PostSaveCardTokenRequest'
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/CardTokenResponse'
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#    get:
+#      tags:
+#        - Cards
+#      summary: Retorna todos os tokens do cliente informado
+#      description: Retorna todos os tokens do cliente informado
+#      operationId: getCardsToken
+#      security:
+#        - bearerAuth: []
+#      parameters:
+#        - name: admId
+#          in: query
+#          description: Número do cliente
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#        - name: Authorization
+#          in: header
+#          description: Baerer Token
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#          example: Baerer <security_token>
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/CardsTokenResponse'
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#  /customer_cancellation/v1/card/token/{cardToken}/deactivate:
+#    patch:
+#      tags:
+#        - Cards
+#      summary: Desativa o token do cartão
+#      description: Desativa o token do cartão
+#      operationId: deactivateCardToken
+#      security:
+#        - bearerAuth: []
+#      parameters:
+#        - name: cardToken
+#          in: path
+#          description: Token do cartão
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#        - name: Authorization
+#          in: header
+#          description: Baerer Token
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#          example: Baerer <security_token>
+#      responses:
+#        '201':
+#          description: OK
+#          content:
+#            no content: {}
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#  /customer_cancellation/v1/card/token/{cardToken}:
+#    delete:
+#      tags:
+#        - Cards
+#      summary: Deleta o token do cartão
+#      description: Deleta o token do cartão
+#      operationId: deleteCardToken
+#      security:
+#        - bearerAuth: []
+#      parameters:
+#        - name: cardToken
+#          in: path
+#          description: Token do cartão
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#        - name: Authorization
+#          in: header
+#          description: Baerer Token
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#          example: Baerer <security_token>
+#      responses:
+#        '201':
+#          description: OK
+#          content:
+#            no content: {}
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#  /customer_cancellation/v1/cards/token/{cardToken}:
+#    get:
+#      tags:
+#        - Cards
+#      summary: Retorna os dados do token do cartão
+#      description: Retorna os dados do token do cartão
+#      operationId: getCardToken
+#      security:
+#        - bearerAuth: []
+#      parameters:
+#        - name: cardToken
+#          in: path
+#          description: Token do cartão
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#        - name: Authorization
+#          in: header
+#          description: Baerer Token
+#          required: true
+#          schema:
+#            type: string
+#            format: string
+#          example: Baerer <security_token>
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/SingleCardTokenResponse'
+#        '400':
+#          description: Bad Request
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '401':
+#          description: Unauthorized
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '403':
+#          description: Forbidden
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '404':
+#          description: Not Found
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#        '500':
+#          description: Internal Server Error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+#components:
+#  schemas:
+#    RollbackPaymentMethodRequest:
+#      type: object
+#      properties:
+#        chargeId:
+#          type: string
+#          format: string
+#          example: "123456789"
+#          description: Número da cobrança
+#        ipagTransactionId:
+#          type: string
+#          format: string
+#          example: "123456789"
+#          description: Número da transação
+#        cardToken:
+#          type: string
+#          format: string
+#          example: "123456789"
+#          description: Token do cartão
+#    RollbackPaymentMethodResponse:
+#      type: object
+#      properties:
+#        message:
+#          type: string
+#          format: string
+#          example: Processo de rollback inicializado !
+#    PostSaveCardTokenRequest:
+#      type: object
+#      properties:
+#        admId:
+#          type: number
+#          format: int64
+#          example: 123456789
+#          description: Número do cliente
+#        cardToken:
+#          type: string
+#          format: string
+#          example: 7be25f8a-ba77-4370-ae19-1e9f57b09797
+#          description: Token do cartão gerado pela IPAG
+#        is_active:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Status do cartão
+#        main_card:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão principal, só pode ter um cartão principal.
+#        recurrence:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão usado para pagamento recorrente.
+#        priority:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Se o cartão é prioritário.
+#        holder:
+#          type: string
+#          format: string
+#          example: Manoel Gomes
+#          description: Nome do titular do cartão
+#        bin:
+#          type: number
+#          format: char
+#          example: 444411
+#          description: Primeiros 6 dígitos do cartão
+#        last4:
+#          type: number
+#          format: char
+#          example: 1111
+#          description: Últimos 4 dígitos do cartão
+#        brand:
+#          type: string
+#          format: string
+#          example: Visa
+#          description: Bandeira do cartão
+#        validated_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de validade do cartão
+#        expires_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de expiração do cartão
+#        type_origin:
+#          type: string
+#          format: char
+#          example: a
+#          description: Origem do cadastro do cartão
+#
+#    CardTokenResponse:
+#      type: object
+#      properties:
+#        message:
+#          type: string
+#          format: string
+#          example: Cartão salvo com sucesso !
+#    SingleCardTokenResponse:
+#      type: object
+#      properties:
+#        id:
+#          type: number
+#          format: int64
+#          example: 123456789
+#          description: Número do cliente
+#        admId:
+#          type: number
+#          format: int64
+#          example: 123456789
+#          description: Número do cliente
+#        cardToken:
+#          type: string
+#          format: string
+#          example: 7be25f8a-ba77-4370-ae19-1e9f57b09797
+#          description: Token do cartão gerado pela IPAG
+#        is_active:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Status do cartão
+#        main_card:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão principal, só pode ter um cartão principal.
+#        recurrence:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão usado para pagamento recorrente.
+#        priority:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Se o cartão é prioritario.
+#        holder:
+#          type: string
+#          format: string
+#          example: Manoel Gomes
+#          description: Nome do titular do cartão
+#        bin:
+#          type: number
+#          format: char
+#          example: 444411
+#          description: Primeiros 6 dígitos do cartão
+#        last4:
+#          type: number
+#          format: char
+#          example: 1111
+#          description: Últimos 4 dígitos do cartão
+#        brand:
+#          type: string
+#          format: string
+#          example: Visa
+#          description: Bandeira do cartão
+#        validated_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28Z"
+#          description: Data de validade do cartão
+#        expires_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28Z"
+#          description: Data de expiração do cartão
+#        created_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28Z"
+#          description: Data de criação do token do cartão
+#        updated_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28Z"
+#          description: Data de atualização do token do cartão
+#    CardsToken:
+#      type: object
+#      properties:
+#        id:
+#          type: number
+#          format: int64
+#          example: 123456789
+#          description: Número do cliente
+#        admId:
+#          type: number
+#          format: int64
+#          example: 123456789
+#          description: Número do cliente
+#        cardToken:
+#          type: string
+#          format: string
+#          example: 7be25f8a-ba77-4370-ae19-1e9f57b09797
+#          description: Token do cartão gerado pela IPAG
+#        is_active:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Status do cartão
+#        main_card:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão principal, só pode ter um cartão principal.
+#        recurrence:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Cartão usado para pagamento recorrente.
+#        priority:
+#          type: boolean
+#          format: boolean
+#          example: true
+#          description: Se o cartão é prioritario.
+#        holder:
+#          type: string
+#          format: string
+#          example: Manoel Gomes
+#          description: Nome do titular do cartão
+#        bin:
+#          type: number
+#          format: char
+#          example: 444411
+#          description: Primeiros 6 dígitos do cartão
+#        last4:
+#          type: number
+#          format: char
+#          example: 1111
+#          description: Últimos 4 dígitos do cartão
+#        brand:
+#          type: string
+#          format: string
+#          example: Visa
+#          description: Bandeira do cartão
+#        validated_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de validade do cartão
+#        expires_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de expiração do cartão
+#        created_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de criação do token do cartão
+#        updated_at:
+#          type: string
+#          format: date-time
+#          example: "2017-07-21T17:32:28.000Z"
+#          description: Data de atualização do token do cartão
+#    CardsTokenResponse:
+#      type: object
+#      properties:
+#        cards:
+#          type: array
+#          items:
+#            $ref: '#/components/schemas/CardsToken'
+#          description: Lista de cartões adicionados pelo cliente
+#    Error:
+#      type: object
+#      properties:
+#        code:
+#          type: string
+#          format: string
+#          example: 4xx or 5xx
+#          description: Código do erro, igual ao status code da requisição
+#        description:
+#          type: string
+#          format: string
+#          example: BAD_REQUEST
+#        errors:
+#          type: array
+#          items:
+#            type: object
+#            properties:
+#              code:
+#                type: string
+#                format: string
+#                example: CSFAPPSVCTKN30
+#              message:
+#                type: string
+#                format: string
+#                example: Campo X inválido
+#    SecurityTokenRequest:
+#      type: object
+#      properties:
+#        grant_type:
+#          type: string
+#          format: string
+#          example: client_credentials
+#          description: Tipo de autenticação
+#        client_id:
+#          type: string
+#          format: string
+#          example: "123456789"
+#          description: Número do cliente
+#        client_secret:
+#          type: string
+#          format: string
+#          example: "123456789"
+#          description: Número do cliente
+#    SecurityTokenResponse:
+#      type: object
+#      properties:
+#        access_token:
+#          type: string
+#          format: string
+#          example: "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYTBiYmY4Zi1lNjE5LTRkOTUtYTRjNC0wOWIwNzEwNTRlMWUifQ.eyJleHAiOjE2ODM5ODQwNTgsImlhdCI6MTY4Mzk4MjI1OCwianRpIjoiNmMyMWQ3NWItZWNkZi00YThiLTg5NjUtODlmYWQwYjdkNWJmIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnNhbmRib3guZGVza3RvcC5sb2NhbC9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiaHR0cHM6Ly9hdXRoLnNhbmRib3guZGVza3RvcC5sb2NhbC9hdXRoL3JlYWxtcy9zYW5kYm94Iiwic3ViIjoiNDIwZmJmODctYzg1Ny00MjA5LTlhZDEtMTdmZmE4Y2NkNTkwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImVjb21tZXJjZSIsInNlc3Npb25fc3RhdGUiOiJiZGE5MDE1OS1lMDRlLTQwNWUtYTdiNC05MDE0NGVhOGQ4YWIiLCJzY29wZSI6InNhbGVzIHRlY2huaWNhbC12aWFiaWxpdHkiLCJzaWQiOiJiZGE5MDE1OS1lMDRlLTQwNWUtYTdiNC05MDE0NGVhOGQ4YWIifQ.HKQ6Pj5qKRRjoC1Pbc7q74iO_qUoNAmT7KTl356sqnw"
+#          description: Token de acesso
+#        expires_in:
+#          type: number
+#          format: int64
+#          example: 10800
+#          description: Tempo de expiração do token
+#        refresh_expires_in:
+#          type: number
+#          format: int64
+#          example: 10800
+#          description: Tempo de refresh do token
+#        refresh_token:
+#          type: string
+#          format: string
+#          example: "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyZUdUNm8weXgxSldGYW1ScFlOcy16aE1wV3d0QktXbnFFOExFM19CR2drIn0.eyJleHAiOjE2ODM5OTMwNTgsImlhdCI6MTY4Mzk4MjI1OCwianRpIjoiZDMyMDQxZDYtODNiYi00MWRkLTk1YmQtNWExMmViZGJjNzUzIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnNhbmRib3guZGVza3RvcC5sb2NhbC9hdXRoL3JlYWxtcy9zYW5kYm94Iiwic3ViIjoiNDIwZmJmODctYzg1Ny00MjA5LTlhZDEtMTdmZmE4Y2NkNTkwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZWNvbW1lcmNlIiwic2Vzc2lvbl9zdGF0ZSI6ImJkYTkwMTU5LWUwNGUtNDA1ZS1hN2I0LTkwMTQ0ZWE4ZDhhYiIsImFjciI6IjEiLCJzY29wZSI6InNhbGVzIHRlY2huaWNhbC12aWFiaWxpdHkiLCJzaWQiOiJiZGE5MDE1OS1lMDRlLTQwNWUtYTdiNC05MDE0NGVhOGQ4YWIiLCJjbGllbnRIb3N0IjoiMTAuMC4wLjIiLCJjbGllbnRJZCI6ImVjb21tZXJjZSIsImNsaWVudEFkZHJlc3MiOiIxMC4wLjAuMiJ9.Q2xew7xB8DTmqDlEm-reg-bvzUQ2wp1aa_fSgE6Uubj_E1fKaSndXMUtCB_zfNu8Zhat4MNeWbvKE_VgBCNNhqjfxMSW_AQFN5ghnFv_nt7oa8cksbQifLLb2NlI2FpGAKGZa8tj2-E3a5Wy6_u3sqX9pyRhyxOmHoJ0pzyjn_qLXKLq3h_Ho8AZbAIe2Cm0ydHze9crDHguu2uUBPRxPBl5_QgHQfssaZgBxhxXkucEjdq6REeQ5lJYM0l7RwkbiwF88_1bM3ef4k878uboNPSKFPRqcAMz-M8CuhgCnVZcyOcsTfEmg9TyZu05rhHgRTRPF4-T63KmwAB-Aia5zQ"
+#          description: Tempo de expiração do token
+#        token_type:
+#          type: string
+#          format: string
+#          example: Bearer
+#          description: Tipo de token
+#        not-before-policy:
+#          type: number
+#          format: int64
+#          example: 0
+#          description: policy
+#        session_state:
+#          type: string
+#          format: string
+#          example: "bda90159-e04e-405e-a7b4-90144ea8d8ab"
+#          description: Estado da sessão
+#        scope:
+#          type: string
+#          format: string
+#          example: customers-cancellation
+#          description: Escopo do token
+#  securitySchemes:
+#    bearerAuth:
+#      type: http
+#      scheme: bearer
+#      bearerFormat: JWT

@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: desktop-customer-cancellation-api
+  main:
+    web-application-type: reactive
+  output:
+    ansi:
+      enabled: ALWAYS
+    beaninfo.ignore: true
+    jpa:
+      show-sql: true
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          generate_statistics: false
+          enable_lazy_load_no_trans: true
+  profiles:
+    group:
+      non_prod: local,dev,qa
+#  cloud:
+#    config:
+#      import-check:
+#        enabled: false
+#      import: "optional:configserver:"
+#      enabled: false
+management:
+  add-application-context-header: false
+  endpoints:
+    web:
+      exposure.include: "*"
+      base-path: /management
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+springdoc:
+  show-actuator: false
+  api-docs:
+    path: "/api-docs"
+    groups:
+      enabled: true
+
+  swagger-ui:
+    disable-swagger-default-url: true
+    url: "/api-docs"
+
+---
+spring:
+  #  profiles: local,dev,qa
+  config:
+    activate:
+      on-profile:
+        - local
+        - dev
+        - qa
+    import: "configserver:"
+  cloud:
+    config:
+      failFast: true
+      uri: http://172.30.0.77:8888/config
+      username: desktop_config_server
+      password: desktop_config_server_pass
+---
+spring:
+  #  profiles: prd
+  config:
+    activate:
+      on-profile: prd
+    import: "optional:configserver:"
+  cloud:
+    config:
+      failFast: true
+      uri: http://172.30.0.76:8888/config
+      username: ${CONFIG_SERVER_USERNAME}
+      password: ${CONFIG_SERVER_PASSWORD}
+
