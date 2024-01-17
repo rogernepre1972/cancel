@@ -7,14 +7,14 @@ spring:
     ansi:
       enabled: ALWAYS
     beaninfo.ignore: true
-    jpa:
-      show-sql: true
-      properties:
-        hibernate:
-          show_sql: true
-          format_sql: true
-          generate_statistics: false
-          enable_lazy_load_no_trans: true
+#    jpa:
+#      show-sql: true
+#      properties:
+#        hibernate:
+#          show_sql: true
+#          format_sql: true
+#          generate_statistics: false
+#          enable_lazy_load_no_trans: true
   profiles:
     group:
       non_prod: local,dev,qa
@@ -45,6 +45,9 @@ springdoc:
     disable-swagger-default-url: true
     url: "/api-docs"
 
+axon:
+  axonserver:
+    enabled: false
 ---
 spring:
   #  profiles: local,dev,qa

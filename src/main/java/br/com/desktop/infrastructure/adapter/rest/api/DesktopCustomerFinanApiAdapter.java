@@ -25,9 +25,6 @@ public class DesktopCustomerFinanApiAdapter {
 
     private WebClient customerFinanApiWebClient;
 
-    @Value("localhost:8092/customer_finan/v1")
-    private String customerFinanApiUrlLocal;
-
     @PostConstruct
     private void setRestTemplate() {
         this.customerFinanApiWebClient = WebClient

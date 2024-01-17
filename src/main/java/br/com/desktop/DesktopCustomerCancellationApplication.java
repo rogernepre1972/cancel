@@ -1,13 +1,15 @@
 package br.com.desktop;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-//@SpringBootApplication(exclude= {UserDetailsServiceAutoConfiguration.class})@Slf4j
 @SpringBootApplication()
+@EnableMongoRepositories(considerNestedRepositories = true, basePackages = {
+		"br.com.desktop.domain.port.mongo"
+})
 public class DesktopCustomerCancellationApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
